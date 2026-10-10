@@ -10,7 +10,7 @@ WhatsApp-groepen.
 |---|---|
 | `index.html` | de hele site: opmaak, inhoud en script |
 | `favicon.svg` | tabbladicoon in de vier gelkleuren |
-| `og.png` | deelafbeelding van 1200×630 voor WhatsApp/Instagram-voorbeelden (bevat "Vanaf € 45", "tot 250 personen" en "DJ op aanvraag": opnieuw maken als dat verandert) |
+| `og.png` | deelafbeelding van 1200×630 voor WhatsApp/Instagram-voorbeelden (bevat "Vanaf € 45", "tot 250 personen" en "DJ als optie" en "Licht · Geluid · DJ": opnieuw maken als dat verandert) |
 | `img/` | eigen foto's (JPG, max. 1600 px) en de hero-loop `hero.mp4`/`hero.webm` (8 s, zonder geluid, ca. 0,4 MB) |
 
 ## Wat nog ingevuld moet worden
