@@ -25,7 +25,7 @@ Alles tussen vierkante haken: zoek in `index.html` op `[`.
 | `[regio]` | hero en de kleine tekst bij de prijzen |
 | footer | naam, KvK-nummer, mail, Instagram |
 
-## Pakketten (bron: gedeelde notitie van Sem, 10 oktober 2026)
+## Pakketten (bron: gedeelde notitie van Beau, 10 oktober 2026)
 
 | Pakket | Inhoud | Prijs |
 |---|---|---|
@@ -34,7 +34,7 @@ Alles tussen vierkante haken: zoek in `index.html` op `[`.
 | tot 150 pers. | geluidsset tot 150 pers., 2 m truss met 2 LED-pars en 2× moving head 150 W, LED football moving head, rookmachine 900 W | € 200 |
 | tot 250 pers. (binnen) | geluidsset tot 250 pers., 2 m truss met 4× moving head 150 W, LED football moving head, T-bar met 4× LED-par 200 W, rookmachine 900 W | € 300 |
 
-**Nog nalopen (aanname, niet van Sem):** de korte pitch per pakket, de label "per feest", de stappen
+**Nog nalopen (aanname, niet van Beau):** de korte pitch per pakket, de label "per feest", de stappen
 "Van aanvraag tot afbouw" en de antwoorden bij de veelgestelde vragen (stroom, opbouwtijd, buiten).
 
 ## Hoe het formulier werkt
