@@ -191,7 +191,10 @@ section{padding-block:clamp(2.5rem, 5vw, 3.75rem)}
   font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase}
 .film::before{content:''; width:0; height:0; border-left:20px solid rgb(var(--gel-015));
   border-top:13px solid transparent; border-bottom:13px solid transparent; transition:transform .16s}
-a.film:hover::before{transform:scale(1.2)}
+.film{cursor:pointer}
+.film:hover::before{transform:scale(1.2)}
+.film iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+iframe{display:block; max-width:100%}
 .film.leeg{color:var(--dim)}
 .film.leeg::before{border-left-color:var(--line)}
 
@@ -367,11 +370,11 @@ footer .rijen{display:flex; flex-wrap:wrap; gap:.75rem 2rem; justify-content:spa
   </div>
   <div class="films">
     <!-- Vul data-yt met de YouTube-video-id (het stuk na v=). -->
-    <a class="film" data-yt="">Eindgala · [school]</a>
-    <a class="film" data-yt="">Openluchtfeest · [vereniging]</a>
-    <a class="film" data-yt="">Kerstshow · [locatie]</a>
+    <button class="film" type="button" data-yt="" aria-label="Video afspelen: eindgala">Eindgala · [school]</button>
+    <button class="film" type="button" data-yt="" aria-label="Video afspelen: openluchtfeest">Openluchtfeest · [vereniging]</button>
+    <button class="film" type="button" data-yt="" aria-label="Video afspelen: kerstshow">Kerstshow · [locatie]</button>
   </div>
-  <p class="klein">Video's openen op YouTube.</p>
+  <p class="klein">Video's laden pas als je erop klikt. Dat scheelt data en zet geen cookies.</p>
 </section>
 
 <section class="wrap">
@@ -519,11 +522,19 @@ $('kopieer').addEventListener('click', () => {
   try { navigator.clipboard.writeText(bericht()).then(klaar, terugval); } catch (e) { terugval(); }
 });
 
-/* Video's: link naar YouTube zodra er een id staat */
-document.querySelectorAll('.film').forEach(a => {
-  const id = a.dataset.yt;
-  if (id) { a.href = `https://www.youtube.com/watch?v=${id}`; a.target = '_blank'; a.rel = 'noopener'; }
-  else { a.classList.add('leeg'); a.setAttribute('aria-disabled','true'); a.title = 'Nog geen video gekoppeld'; }
+/* Video's pas laden na een klik, via youtube-nocookie */
+document.querySelectorAll('.film').forEach(knop => {
+  if (!knop.dataset.yt) knop.classList.add('leeg');
+  knop.addEventListener('click', () => {
+    const id = knop.dataset.yt;
+    if (!id) { knop.textContent = 'Nog geen video gekoppeld'; return; }
+    const f = document.createElement('iframe');
+    f.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+    f.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
+    f.allowFullscreen = true;
+    f.title = knop.textContent;
+    knop.replaceWith(f);
+  });
 });
 
 bijwerken();

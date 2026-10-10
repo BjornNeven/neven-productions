@@ -10,7 +10,7 @@ WhatsApp-groepen.
 |---|---|
 | `index.html` | de hele site: opmaak, inhoud en script |
 | `favicon.svg` | tabbladicoon in de vier gelkleuren |
-| `og.png` | **ontbreekt nog** — deelafbeelding van 1200×630 voor WhatsApp/Instagram-voorbeelden |
+| `og.png` | deelafbeelding van 1200×630 voor WhatsApp/Instagram-voorbeelden (bevat "Vanaf € 195": opnieuw maken als de prijs verandert) |
 
 ## Wat nog ingevuld moet worden
 
