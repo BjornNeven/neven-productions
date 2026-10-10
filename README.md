@@ -37,6 +37,18 @@ Alles tussen vierkante haken: zoek in `index.html` op `[`.
 **Nog nalopen (aanname, niet van Beau):** de korte pitch per pakket, de label "per feest", de stappen
 "Van aanvraag tot afbouw" en de antwoorden bij de veelgestelde vragen (stroom, opbouwtijd, buiten).
 
+## Intro
+
+Bij het openen speelt een intro van ongeveer 3 seconden (canvas, geen bibliotheken): vier moving heads
+in de gelkleuren zwaaien door de rook naar een draaiende gobo, het logo flikkert aan, en een
+strobe-flits gaat over in de site. De intro:
+- speelt één keer per sessie (sessionStorage);
+- speelt nooit als "beweging verminderen" aan staat;
+- stopt bij klik, Esc, Enter of spatie, met een vangnet na 6 s;
+- staat uit met `?intro=uit` achter de URL, handig tijdens het bouwen.
+
+Timing aanpassen: `T_LOGO`, `T_FLITS` en `T_EIND` bovenin het intro-script.
+
 ## Hoe het formulier werkt
 
 Geen backend, geen formulierdienst. De browser van de bezoeker stelt het bericht zelf samen en opent
