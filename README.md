@@ -10,7 +10,8 @@ WhatsApp-groepen.
 |---|---|
 | `index.html` | de hele site: opmaak, inhoud en script |
 | `favicon.svg` | tabbladicoon in de vier gelkleuren |
-| `og.png` | deelafbeelding van 1200×630 voor WhatsApp/Instagram-voorbeelden (bevat "Vanaf € 195": opnieuw maken als de prijs verandert) |
+| `og.png` | deelafbeelding van 1200×630 voor WhatsApp/Instagram-voorbeelden (bevat "Vanaf € 45" en "30 tot 250 personen": opnieuw maken als dat verandert) |
+| `img/` | eigen foto's (JPG, max. 1600 px) en de hero-loop `hero.mp4`/`hero.webm` (8 s, zonder geluid, ca. 0,4 MB) |
 
 ## Wat nog ingevuld moet worden
 
@@ -22,13 +23,19 @@ Alles tussen vierkante haken: zoek in `index.html` op `[`.
 | `MAIL` bovenin het script | e-mailadres |
 | `og:url` en `og:image` | volledige URL zodra er een domein is |
 | `[regio]` | hero en de kleine tekst bij de prijzen |
-| `[24]` en `[48]` | de cijferstrook |
-| `data-yt=""` | YouTube-video-id per film (het stuk na `v=`) |
-| `[school]`, `[vereniging]`, `[locatie]` | labels onder de films |
 | footer | naam, KvK-nummer, mail, Instagram |
 
-**Niet tussen haken maar wel nalopen:** de prijzen (€ 195 / € 395 / € 595) en de inhoud van de drie
-pakketten zijn aannames uit de eerste opzet, geen echte tarieven.
+## Pakketten (bron: gedeelde notitie van Sem, 10 oktober 2026)
+
+| Pakket | Inhoud | Prijs |
+|---|---|---|
+| tot 30 pers. | JBL PartyBox 310, 2× LED-par op T-bar | € 45 |
+| tot 50 pers. | JBL PartyBox 310, 4× LED-par op T-bar, rookmachine 900 W | € 85 |
+| tot 150 pers. | geluidsset tot 150 pers., 2 m truss met 2 LED-pars en 2× moving head 150 W, LED football moving head, rookmachine 900 W | € 200 |
+| tot 250 pers. (binnen) | geluidsset tot 250 pers., 2 m truss met 4× moving head 150 W, LED football moving head, T-bar met 4× LED-par 200 W, rookmachine 900 W | € 300 |
+
+**Nog nalopen (aanname, niet van Sem):** de korte pitch per pakket, de label "per feest", de stappen
+"Van aanvraag tot afbouw" en de antwoorden bij de veelgestelde vragen (stroom, opbouwtijd, buiten).
 
 ## Hoe het formulier werkt
 

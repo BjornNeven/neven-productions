@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Neven Productions — licht, geluid en DJ voor jouw avond</title>
-<meta name="description" content="Complete showproductie voor schoolfeesten, verenigingen en kleine podia. Licht, geluid en DJ in drie pakketten, met opbouw en afbouw inbegrepen." />
+<meta name="description" content="Licht, geluid en rook voor je feest. Vier pakketten voor 30 tot 250 personen, vanaf € 45." />
 <meta name="theme-color" content="#06070a" />
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Neven Productions" />
 <meta property="og:title" content="Neven Productions — licht, geluid en DJ" />
-<meta property="og:description" content="Drie pakketten voor schoolfeesten, verenigingen en kleine podia. Opbouw en afbouw inbegrepen." />
+<meta property="og:description" content="Vier pakketten voor feesten van 30 tot 250 personen, vanaf € 45." />
 <meta property="og:url" content="https://[jouwdomein.nl]/" />
 <meta property="og:image" content="og.png" />
 <meta property="og:image:width" content="1200" />
@@ -236,11 +236,53 @@ iframe{display:block; max-width:100%}
 
 footer{border-top:var(--rand); padding-block:2.5rem 3.5rem; color:var(--dim); font-size:.85rem}
 footer .rijen{display:flex; flex-wrap:wrap; gap:.75rem 2rem; justify-content:space-between}
+
+/* Hero-video achter de tekst */
+.hero-video{position:absolute; inset:0; z-index:-2; overflow:hidden}
+.hero-video video,.hero-video img{width:100%; height:100%; object-fit:cover; opacity:.55}
+.hero-video::after{content:''; position:absolute; inset:0;
+  background:linear-gradient(100deg, rgb(6 7 10 / .92) 0%, rgb(6 7 10 / .55) 55%, rgb(6 7 10 / .25) 100%)}
+@media (prefers-reduced-motion: reduce){ .hero-video video{display:none} }
+.hero-video img{position:absolute; inset:0}
+
+/* Pakketfoto */
+.case figure{margin:-1.5rem -1.4rem 1.25rem; aspect-ratio:4/3; overflow:hidden; background:var(--fog)}
+.case figure img{width:100%; height:100%; object-fit:cover}
+@media (min-width:900px){ .cases.vier{grid-template-columns:repeat(2,1fr); align-items:stretch} }
+@media (min-width:1180px){ .cases.vier{grid-template-columns:repeat(4,1fr)} }
+
+/* Kies je kleur */
+.sfeer{display:grid; gap:1.25rem; margin-top:2rem}
+@media (min-width:860px){ .sfeer{grid-template-columns:minmax(0,2fr) minmax(0,1fr); align-items:center} }
+.sfeer .doek{position:relative; aspect-ratio:4/3; overflow:hidden; border:var(--rand); background:var(--fog)}
+.sfeer .doek img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  opacity:0; transition:opacity .45s ease}
+.sfeer .doek img.aan{opacity:1}
+.kleuren{display:flex; flex-wrap:wrap; gap:.6rem}
+.kleuren button{--c:var(--gel-119); flex:1 1 calc(50% - .6rem); min-height:52px; cursor:pointer;
+  background:var(--haze); color:var(--chalk); border:1px solid var(--line); border-left:6px solid rgb(var(--c));
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; text-align:left; padding:.7rem 1rem}
+.kleuren button[aria-pressed="true"]{background:rgb(var(--c) / .18); border-color:rgb(var(--c))}
+
+/* Beeldstrook */
+.beelden{display:grid; gap:.6rem; margin-top:2rem; grid-template-columns:repeat(2,1fr)}
+@media (min-width:760px){ .beelden{grid-template-columns:repeat(4,1fr)} }
+.beelden figure{margin:0; overflow:hidden; background:var(--fog); border:var(--rand)}
+.beelden img{width:100%; height:100%; object-fit:cover; aspect-ratio:3/4}
+.beelden .breed{grid-column:span 2}
+.beelden .breed img{aspect-ratio:16/9}
 </style>
 </head>
 <body>
 
 <header class="hero">
+  <div class="hero-video" aria-hidden="true">
+    <img src="img/hero-poster.jpg" alt="" />
+    <video autoplay muted loop playsinline preload="metadata" poster="img/hero-poster.jpg">
+      <source src="img/hero.webm" type="video/webm" />
+      <source src="img/hero.mp4" type="video/mp4" />
+    </video>
+  </div>
   <div class="stralen" aria-hidden="true">
     <span style="--c:var(--gel-106); --r:-31deg; --d:0s"></span>
     <span style="--c:var(--gel-015); --r:-11deg; --d:-3s"></span>
@@ -252,10 +294,10 @@ footer .rijen{display:flex; flex-wrap:wrap; gap:.75rem 2rem; justify-content:spa
       <i style="--c:var(--gel-106)"></i><i style="--c:var(--gel-015)"></i>
       <i style="--c:var(--gel-119)"></i><i style="--c:var(--gel-126)"></i>
     </div>
-    <p class="oog">Licht · Geluid · DJ</p>
+    <p class="oog">Licht · Geluid · Rook</p>
     <h1>Neven<br />Productions</h1>
-    <p class="lead">Complete showproductie voor schoolfeesten, verenigingen en kleine podia.
-      Eén aanspreekpunt, opbouw en afbouw inbegrepen.</p>
+    <p class="lead">Licht, geluid en rook voor je feest. Van een verjaardag met 30 man
+      tot een zaal met 250 personen.</p>
     <div class="acties">
       <a class="knop vol" href="#boeken">Datum aanvragen</a>
       <a class="knop stil" href="#pakketten">Bekijk de pakketten</a>
@@ -265,86 +307,106 @@ footer .rijen{display:flex; flex-wrap:wrap; gap:.75rem 2rem; justify-content:spa
 </header>
 
 <dl class="cijfers">
-  <div><dt>Shows gedraaid</dt><dd>[24]</dd></div>
-  <div><dt>Fixtures in de rig</dt><dd>[48]</dd></div>
+  <div><dt>Pakketten</dt><dd>4</dd></div>
+  <div><dt>Gasten</dt><dd>30–250</dd></div>
+  <div><dt>Vanaf</dt><dd>€ 45</dd></div>
   <div><dt>Reactie op aanvraag</dt><dd>&lt;24u</dd></div>
-  <div><dt>Opbouw inbegrepen</dt><dd>Altijd</dd></div>
 </dl>
 
 <section id="pakketten" class="wrap">
   <div class="sectiekop">
-    <p class="oog">Drie pakketten</p>
-    <h2>Kies wat je nodig hebt</h2>
-    <div class="kolom"><p>Vaste prijs vooraf. Wat erin zit staat hieronder, en wat er niet in zit zeg ik erbij. Twijfel je tussen twee pakketten, vraag dan gewoon allebei aan.</p></div>
+    <p class="oog">Vier pakketten</p>
+    <h2>Kies wat bij je feest past</h2>
+    <div class="kolom"><p>Het aantal gasten bepaalt het pakket. Wat erin zit staat hieronder. Twijfel je, vraag dan gewoon aan en zet erbij hoeveel mensen er komen.</p></div>
   </div>
 
-  <div class="cases">
+  <div class="cases vier">
     <article class="case" style="--gel:var(--gel-119)">
+      <figure><img src="img/pakket-30.jpg" alt="JBL PartyBox met twee LED-pars op een T-bar" loading="lazy" width="1200" height="900" /></figure>
+      
       <p class="code">PAKKET 01</p>
-      <h3>Rig</h3>
-      <p class="pitch">Alleen licht. Voor als het geluid al geregeld is.</p>
-      <dl class="spec">
-        <div><dt>Fixtures</dt><dd>12</dd></div>
-        <div><dt>Universes</dt><dd>1</dd></div>
-        <div><dt>Opbouw</dt><dd>2 uur</dd></div>
-        <div><dt>Besturing</dt><dd>QLC+</dd></div>
-      </dl>
+      <h3>Tot 30 personen</h3>
+      <p class="pitch">Verjaardag of huiskamerfeest.</p>
+      <dl class="spec"><div><dt>Gasten</dt><dd>tot 30</dd></div><div><dt>Rook</dt><dd>geen</dd></div></dl>
       <ul class="inhoud">
-        <li>12 LED-fixtures op statief of truss</li>
-        <li>Hazer voor zichtbare bundels</li>
-        <li>Show vooraf geprogrammeerd op jullie muziek</li>
-        <li>Bediening tijdens de hele avond</li>
-        <li>Opbouw en afbouw</li>
+        <li>1× JBL PartyBox 310</li>
+        <li>2× LED-par op T-bar</li>
       </ul>
-      <p class="prijs"><b>€ 195</b><span>vanaf</span></p>
-      <a class="knop" href="#boeken" data-pakket="Rig">Rig aanvragen</a>
+      <p class="prijs"><b>€ 45</b><span>per feest</span></p>
+      <a class="knop" href="#boeken" data-pakket="Tot 30">Dit pakket aanvragen</a>
     </article>
-
-    <article class="case aanbevolen" style="--gel:var(--gel-015)">
-      <span class="vlag">Meest gekozen</span>
+    <article class="case" style="--gel:var(--gel-126)">
+      <figure><img src="img/pakket-50.jpg" alt="JBL PartyBox met vier LED-pars en rook" loading="lazy" width="1200" height="900" /></figure>
+      
       <p class="code">PAKKET 02</p>
-      <h3>Productie</h3>
-      <p class="pitch">Licht én geluid. Jullie brengen de muziek mee.</p>
-      <dl class="spec">
-        <div><dt>Fixtures</dt><dd>18</dd></div>
-        <div><dt>Geluid</dt><dd>tot 150 pers.</dd></div>
-        <div><dt>Opbouw</dt><dd>3 uur</dd></div>
-        <div><dt>Microfoons</dt><dd>2 draadloos</dd></div>
-      </dl>
+      <h3>Tot 50 personen</h3>
+      <p class="pitch">Meer licht en rook op de dansvloer.</p>
+      <dl class="spec"><div><dt>Gasten</dt><dd>tot 50</dd></div><div><dt>Rook</dt><dd>900 W</dd></div></dl>
       <ul class="inhoud">
-        <li>Alles uit pakket Rig, met 18 fixtures</li>
-        <li>PA met subs en tops, afgestemd op de zaal</li>
-        <li>Twee draadloze microfoons voor speeches</li>
-        <li>Aansluiting voor jullie laptop of eigen DJ</li>
-        <li>Soundcheck voordat de deuren opengaan</li>
+        <li>1× JBL PartyBox 310</li>
+        <li>4× LED-par op T-bar</li>
+        <li>1× rookmachine 900 W</li>
       </ul>
-      <p class="prijs"><b>€ 395</b><span>vanaf</span></p>
-      <a class="knop vol" href="#boeken" data-pakket="Productie">Productie aanvragen</a>
+      <p class="prijs"><b>€ 85</b><span>per feest</span></p>
+      <a class="knop" href="#boeken" data-pakket="Tot 50">Dit pakket aanvragen</a>
     </article>
-
-    <article class="case" style="--gel:var(--gel-106)">
+    <article class="case aanbevolen" style="--gel:var(--gel-015)">
+      <figure><img src="img/pakket-150.jpg" alt="DJ-booth met twee speakers en moving heads op truss" loading="lazy" width="1200" height="900" /></figure>
+      <span class="vlag">Meest compleet</span>
       <p class="code">PAKKET 03</p>
-      <h3>Full show</h3>
-      <p class="pitch">Licht, geluid en DJ. Jij regelt alleen de zaal.</p>
-      <dl class="spec">
-        <div><dt>Fixtures</dt><dd>24</dd></div>
-        <div><dt>Geluid</dt><dd>tot 250 pers.</dd></div>
-        <div><dt>Draaitijd</dt><dd>5 uur</dd></div>
-        <div><dt>Opbouw</dt><dd>4 uur</dd></div>
-      </dl>
+      <h3>Tot 150 personen</h3>
+      <p class="pitch">Echte geluidsset en moving heads.</p>
+      <dl class="spec"><div><dt>Gasten</dt><dd>tot 150</dd></div><div><dt>Rook</dt><dd>900 W</dd></div></dl>
       <ul class="inhoud">
-        <li>Alles uit pakket Productie, met 24 fixtures</li>
-        <li>DJ de hele avond</li>
-        <li>Verzoeknummers vooraf en tijdens de avond</li>
-        <li>Licht live meegestuurd op de muziek</li>
-        <li>Draadloze microfoon voor speeches en prijsuitreiking</li>
+        <li>1× geluidsset tot 150 personen</li>
+        <li>2 m truss met 2 LED-pars en 2× moving head 150 W</li>
+        <li>1× LED football moving head</li>
+        <li>1× rookmachine 900 W</li>
       </ul>
-      <p class="prijs"><b>€ 595</b><span>vanaf</span></p>
-      <a class="knop" href="#boeken" data-pakket="Full show">Full show aanvragen</a>
+      <p class="prijs"><b>€ 200</b><span>per feest</span></p>
+      <a class="knop vol" href="#boeken" data-pakket="Tot 150">Dit pakket aanvragen</a>
+    </article>
+    <article class="case" style="--gel:var(--gel-106)">
+      <figure><img src="img/pakket-250.jpg" alt="Vier moving heads met bundels door de rook boven de DJ-booth" loading="lazy" width="1200" height="900" /></figure>
+      
+      <p class="code">PAKKET 04</p>
+      <h3>Tot 250 personen</h3>
+      <p class="pitch">De grote set, voor binnen.</p>
+      <dl class="spec"><div><dt>Gasten</dt><dd>tot 250</dd></div><div><dt>Rook</dt><dd>900 W</dd></div></dl>
+      <ul class="inhoud">
+        <li>1× geluidsset tot 250 personen</li>
+        <li>2 m truss met 4× moving head 150 W</li>
+        <li>1× LED football moving head</li>
+        <li>T-bar met 4× LED-par 200 W</li>
+        <li>1× rookmachine 900 W</li>
+      </ul>
+      <p class="prijs"><b>€ 300</b><span>per feest</span></p>
+      <a class="knop" href="#boeken" data-pakket="Tot 250">Dit pakket aanvragen</a>
     </article>
   </div>
-  <p class="klein">Richtprijzen voor een avond binnen [regio]. Langere draaitijd, extra
-    reisafstand of een grotere zaal reken ik vooraf door, nooit achteraf.</p>
+  <p class="klein">Prijzen per feest. Reisafstand of iets extra's bespreken we vooraf.</p>
+</section>
+
+<section class="wrap" id="sfeer">
+  <div class="sectiekop">
+    <p class="oog">Kies je kleur</p>
+    <h2>Zelfde zaal, andere avond</h2>
+    <div class="kolom"><p>Vier foto's, één opstelling. Alleen de kleur van het licht verschilt. Jij kiest de sfeer, ik zet hem klaar.</p></div>
+  </div>
+  <div class="sfeer">
+    <div class="doek">
+      <img class="aan" src="img/sfeer-paars.jpg" alt="Opstelling in paars licht met rook" data-kleur="paars" loading="lazy" />
+      <img src="img/sfeer-blauw.jpg" alt="Opstelling in blauw licht" data-kleur="blauw" loading="lazy" />
+      <img src="img/sfeer-rood.jpg" alt="Opstelling in rood licht met rook" data-kleur="rood" loading="lazy" />
+      <img src="img/sfeer-groen.jpg" alt="Opstelling in groen licht met rook" data-kleur="groen" loading="lazy" />
+    </div>
+    <div class="kleuren" role="group" aria-label="Kies een lichtkleur">
+      <button type="button" style="--c:var(--gel-126)" data-kleur="paars" aria-pressed="true">Paars</button>
+      <button type="button" style="--c:var(--gel-119)" data-kleur="blauw" aria-pressed="false">Blauw</button>
+      <button type="button" style="--c:var(--gel-106)" data-kleur="rood" aria-pressed="false">Rood</button>
+      <button type="button" style="--c:46 190 110" data-kleur="groen" aria-pressed="false">Groen</button>
+    </div>
+  </div>
 </section>
 
 <section class="wrap">
@@ -364,17 +426,18 @@ footer .rijen{display:flex; flex-wrap:wrap; gap:.75rem 2rem; justify-content:spa
 
 <section class="wrap">
   <div class="sectiekop">
-    <p class="oog">Eerder gedraaid</p>
+    <p class="oog">Eerder neergezet</p>
     <h2>Zo ziet het eruit</h2>
-    <div class="kolom"><p>Beeld uit eerdere avonden. Geen stockmateriaal, gewoon wat er stond.</p></div>
+    <div class="kolom"><p>Eigen foto's van eigen opstellingen. Geen stockmateriaal.</p></div>
   </div>
-  <div class="films">
-    <!-- Vul data-yt met de YouTube-video-id (het stuk na v=). -->
-    <button class="film" type="button" data-yt="" aria-label="Video afspelen: eindgala">Eindgala · [school]</button>
-    <button class="film" type="button" data-yt="" aria-label="Video afspelen: openluchtfeest">Openluchtfeest · [vereniging]</button>
-    <button class="film" type="button" data-yt="" aria-label="Video afspelen: kerstshow">Kerstshow · [locatie]</button>
+  <div class="beelden">
+    <figure class="breed"><img src="img/beeld-flits.jpg" alt="Moving heads en flitsers boven de DJ-booth" loading="lazy" /></figure>
+    <figure><img src="img/beeld-dj.jpg" alt="DJ-controller in het booth, groen verlicht" loading="lazy" /></figure>
+    <figure><img src="img/beeld-truss.jpg" alt="Truss met moving heads en LED-pars" loading="lazy" /></figure>
+    <figure><img src="img/beeld-groen.jpg" alt="Groene bundels boven de DJ-booth" loading="lazy" /></figure>
+    <figure><img src="img/beeld-booth.jpg" alt="Verlicht DJ-booth met Neven Productions-logo" loading="lazy" /></figure>
+    <figure class="breed"><img src="img/beeld-show.jpg" alt="Vier bundels door de rook, paars licht in de zaal" loading="lazy" /></figure>
   </div>
-  <p class="klein">Video's laden pas als je erop klikt. Dat scheelt data en zet geen cookies.</p>
 </section>
 
 <section class="wrap">
@@ -385,22 +448,20 @@ footer .rijen{display:flex; flex-wrap:wrap; gap:.75rem 2rem; justify-content:spa
   </div>
   <div class="vragen">
     <details><summary>Hoeveel stroom heb ik nodig?</summary>
-      <p>Pakket Rig komt uit op één groep van 16 ampère. Productie en Full show hebben er twee
-        nodig, het liefst op verschillende groepen. Ik check dat vooraf met de zaal, dan kom je
-        er tijdens de avond niet achter.</p></details>
+      <p>De pakketten tot 50 personen draaien op een gewoon stopcontact. Voor de grotere sets
+        check ik vooraf met de zaal hoeveel groepen er zijn, dan kom je er tijdens de avond niet achter.</p></details>
     <details><summary>Hoe lang duurt de opbouw?</summary>
-      <p>Twee uur voor Rig, drie voor Productie, vier voor Full show. Ik reken daarbovenop altijd
-        een halfuur speling in, zodat de soundcheck niet in de haast gebeurt.</p></details>
+      <p>Hoe groter het pakket, hoe langer. Ik spreek vooraf een tijd af en kom altijd met
+        speling, zodat alles staat en getest is voordat de eerste gasten binnen zijn.</p></details>
     <details><summary>Kan het ook buiten?</summary>
-      <p>Ja, met IP65-materiaal en een droog opstelpunt voor de besturing. Reken buiten wel op
-        ongeveer anderhalf keer zoveel opbouwtijd, en bespreek vooraf wat plan B is bij regen.</p></details>
+      <p>Het pakket tot 250 personen is voor binnen. Voor de andere pakketten hangt het af van
+        de plek en het weer: bespreek het bij de aanvraag, dan kijken we samen wat kan.</p></details>
     <details><summary>Geldt er een geluidslimiet?</summary>
       <p>Veel zalen hebben een afgesproken maximum. Geef die door bij de aanvraag, dan stem ik de
         opstelling daarop af. Harder is zelden beter; goed afgesteld klinkt op 95 dB vaak
         indrukwekkender dan slecht afgesteld op 105.</p></details>
     <details><summary>Kunnen we verzoeknummers doorgeven?</summary>
-      <p>Bij Full show krijg je vooraf een lijst waar jullie zelf nummers in kunnen zetten, en
-        tijdens de avond kan er altijd iets tussendoor.</p></details>
+      <p>Zet ze bij de toelichting in het formulier, dan nemen we ze vooraf door.</p></details>
     <details><summary>Er hangt al een installatie in de zaal.</summary>
       <p>Prima. Dan sluit ik daarop aan of vul ik aan waar het tekortschiet. Stuur een foto van
         wat er hangt mee bij de aanvraag, dan zeg ik wat er echt nodig is.</p></details>
@@ -424,10 +485,11 @@ footer .rijen{display:flex; flex-wrap:wrap; gap:.75rem 2rem; justify-content:spa
     </div>
     <div class="veld"><label for="fPakket">Pakket</label>
       <select id="fPakket">
-        <option>Rig — alleen licht</option>
-        <option selected>Productie — licht en geluid</option>
-        <option>Full show — licht, geluid en DJ</option>
-        <option>Weet ik nog niet</option>
+        <option>Tot 30 personen — € 45</option>
+        <option>Tot 50 personen — € 85</option>
+        <option>Tot 150 personen — € 200</option>
+        <option>Tot 250 personen — € 300</option>
+        <option selected>Weet ik nog niet</option>
       </select>
     </div>
     <div class="veld"><label for="fMeer">Toelichting</label>
@@ -522,18 +584,12 @@ $('kopieer').addEventListener('click', () => {
   try { navigator.clipboard.writeText(bericht()).then(klaar, terugval); } catch (e) { terugval(); }
 });
 
-/* Video's pas laden na een klik, via youtube-nocookie */
-document.querySelectorAll('.film').forEach(knop => {
-  if (!knop.dataset.yt) knop.classList.add('leeg');
+/* Kies je kleur: foto wisselen */
+document.querySelectorAll('.kleuren button').forEach(knop => {
   knop.addEventListener('click', () => {
-    const id = knop.dataset.yt;
-    if (!id) { knop.textContent = 'Nog geen video gekoppeld'; return; }
-    const f = document.createElement('iframe');
-    f.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
-    f.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
-    f.allowFullscreen = true;
-    f.title = knop.textContent;
-    knop.replaceWith(f);
+    const k = knop.dataset.kleur;
+    document.querySelectorAll('.kleuren button').forEach(b => b.setAttribute('aria-pressed', b === knop));
+    document.querySelectorAll('.sfeer .doek img').forEach(i => i.classList.toggle('aan', i.dataset.kleur === k));
   });
 });
 
