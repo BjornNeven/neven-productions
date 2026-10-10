@@ -39,15 +39,17 @@ Alles tussen vierkante haken: zoek in `index.html` op `[`.
 
 ## Intro
 
-Bij het openen speelt een intro van ongeveer 3 seconden (canvas, geen bibliotheken): vier moving heads
-in de gelkleuren zwaaien door de rook naar een draaiende gobo, het logo flikkert aan, en een
-strobe-flits gaat over in de site. De intro:
-- speelt één keer per sessie (sessionStorage);
-- speelt nooit als "beweging verminderen" aan staat;
-- stopt bij klik, Esc, Enter of spatie, met een vangnet na 6 s;
-- staat uit met `?intro=uit` achter de URL, handig tijdens het bouwen.
+Bij het openen speelt een intro van ongeveer 3,5 seconden (canvas, geen bibliotheken):
+1. vier moving heads in de gelkleuren gaan aan en zwaaien door de rook naar een draaiende vloer-gobo;
+2. een laserwaaier (groen, met enkele rode lijnen) opent vanaf de vloer, scant en sluit;
+3. de koppen draaien naar de achterwand en zoomen open; daar wordt een logo-gobo scherp gesteld;
+4. een strobe-flits gaat over in de site.
 
-Timing aanpassen: `T_LOGO`, `T_FLITS` en `T_EIND` bovenin het intro-script.
+De intro speelt één keer per sessie (sessionStorage) en nooit als "beweging verminderen" aan staat.
+Hij stopt bij klik, Esc, Enter of spatie, met een vangnet na 6,5 s. Met `?intro=uit` achter de URL
+sla je hem over tijdens het bouwen.
+
+Timing aanpassen: het object `T` bovenin het intro-script.
 
 ## Hoe het formulier werkt
 

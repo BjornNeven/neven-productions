@@ -276,16 +276,7 @@ footer .rijen{display:flex; flex-wrap:wrap; gap:.75rem 2rem; justify-content:spa
 #intro{position:fixed; inset:0; z-index:100; background:#000; display:grid; place-items:center;
   transition:opacity .6s ease, transform .6s ease}
 #intro canvas{position:absolute; inset:0; width:100%; height:100%}
-#intro .logo{position:relative; text-align:center; font-family:var(--sans); font-weight:900;
-  font-stretch:118%; text-transform:uppercase; line-height:.9; letter-spacing:-.01em;
-  font-size:clamp(2.4rem, 11vw, 7rem); color:#fff; opacity:0;
-  text-shadow:0 0 18px rgb(255 255 255 / .55), 0 0 60px rgb(var(--gel-126) / .6)}
-#intro .logo small{display:block; margin-top:1rem; font-family:var(--mono); font-weight:400;
-  font-size:clamp(.65rem, 2.4vw, .85rem); letter-spacing:.32em; color:var(--lead); text-shadow:none}
-#intro.logo-aan .logo{animation:flikker .7s steps(1,end) forwards}
-@keyframes flikker{0%{opacity:0}12%{opacity:.9}20%{opacity:.1}34%{opacity:1}42%{opacity:.3}55%,100%{opacity:1}}
-#intro.weg{opacity:0; transform:scale(1.08); pointer-events:none; transition-delay:.12s}
-#intro.weg .logo{opacity:0 !important; animation:none; transition:opacity .15s}
+#intro.weg{opacity:0; transform:scale(1.08); pointer-events:none}
 #intro .skip{position:absolute; right:1rem; bottom:calc(1rem + env(safe-area-inset-bottom,0px));
   min-height:44px; padding:.6rem 1rem; background:rgb(0 0 0 / .5); color:var(--dim);
   border:1px solid var(--line); font-family:var(--mono); font-size:.68rem; letter-spacing:.16em;
@@ -297,11 +288,12 @@ html.intro-loopt body{overflow:hidden}
 <body>
 <div id="intro" aria-hidden="true">
   <canvas></canvas>
-  <div class="logo">Neven<br />Productions<small>Licht · Geluid · Rook</small></div>
   <button class="skip" type="button" tabindex="-1">Overslaan</button>
 </div>
 <script>
-/* Intro. Speelt één keer per sessie, nooit bij 'beweging verminderen', altijd weg te klikken. */
+/* Intro. Speelt één keer per sessie, nooit bij 'beweging verminderen', altijd weg te klikken.
+   Volgorde: koppen aan → bundels zwaaien naar de vloer-gobo → laserwaaier → koppen naar de wand,
+   logo-gobo wordt scherp gesteld → strobe-flits → site. */
 (() => {
   const el = document.getElementById('intro');
   let gezien = false;
@@ -313,16 +305,23 @@ html.intro-loopt body{overflow:hidden}
 
   const cv = el.querySelector('canvas'), ctx = cv.getContext('2d');
   const dpr = Math.min(devicePixelRatio || 1, 2);
-  let W, H;
-  const maat = () => { W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr,0,0,dpr,0,0); };
+  let W, H, logoGobo = null;
+  const maat = () => { W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0); logoGobo = null; };
   maat(); addEventListener('resize', maat);
 
-  /* Rookwolk: één keer voorgerenderd, daarna alleen verschoven */
-  const rook = document.createElement('canvas'); rook.width = 512; rook.height = 512;
+  /* Tijdlijn in seconden */
+  const T = { samen:[.5,1.6], vloer:[1.0,1.6], laser:[1.1,2.5], wand:[2.0,2.5], focus:[2.15,2.75],
+              flits:3.15, eind:3.5 };
+  const ease = x => x<0?0:x>1?1:1-Math.pow(1-x,3);
+  const fase = ([a,b], t) => ease((t-a)/(b-a));
+
+  /* Rookwolk: één keer voorgerenderd, naadloos herhaald */
+  const rook = document.createElement('canvas'); rook.width = rook.height = 512;
   const rc = rook.getContext('2d');
   for (let i = 0; i < 70; i++) {
     const x = Math.random()*512, y = Math.random()*512, r = 40 + Math.random()*120;
-    for (const ox of [-512,0,512]) for (const oy of [-512,0,512]) {      /* rondom herhalen = geen naden */
+    for (const ox of [-512,0,512]) for (const oy of [-512,0,512]) {
       const g = rc.createRadialGradient(x+ox,y+oy,0,x+ox,y+oy,r);
       g.addColorStop(0,'rgba(255,255,255,.06)'); g.addColorStop(1,'rgba(255,255,255,0)');
       rc.fillStyle = g; rc.fillRect(0,0,512,512);
@@ -330,80 +329,133 @@ html.intro-loopt body{overflow:hidden}
   }
 
   const GEL = [[232,51,42],[255,165,31],[46,92,230],[166,75,216]];
-  const UIT = [-.9, -.45, .45, .9];             /* startafwijking per kop, radialen */
-  const ease = x => x<0?0:x>1?1:1-Math.pow(1-x,3);
-  const T_LOGO = 1.75, T_FLITS = 2.75, T_EIND = 3.1;
+  const UIT = [-.9, -.45, .45, .9];
   let t0 = null, klaar = false;
 
   function bundel(fx, fy, hoek, breedte, kleur, sterkte, lengte) {
     const [r,g,b] = kleur;
-    for (const [k, a] of [[2.6,.10],[1.4,.22],[.55,.55]]) {          /* zachte rand + kern */
+    for (const [k, a] of [[2.6,.10],[1.4,.22],[.55,.55]]) {
       const w = breedte * k;
-      const x1 = fx + Math.sin(hoek - w)*lengte, y1 = fy + Math.cos(hoek - w)*lengte;
-      const x2 = fx + Math.sin(hoek + w)*lengte, y2 = fy + Math.cos(hoek + w)*lengte;
       const gr = ctx.createLinearGradient(fx, fy, fx + Math.sin(hoek)*lengte, fy + Math.cos(hoek)*lengte);
-      gr.addColorStop(0, `rgba(${r},${g},${b},${a*sterkte})`);
-      gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
-      ctx.fillStyle = gr;
-      ctx.beginPath(); ctx.moveTo(fx, fy); ctx.lineTo(x1, y1); ctx.lineTo(x2, y2); ctx.closePath(); ctx.fill();
+      gr.addColorStop(0, `rgba(${r},${g},${b},${a*sterkte})`); gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      ctx.fillStyle = gr; ctx.beginPath(); ctx.moveTo(fx, fy);
+      ctx.lineTo(fx + Math.sin(hoek - w)*lengte, fy + Math.cos(hoek - w)*lengte);
+      ctx.lineTo(fx + Math.sin(hoek + w)*lengte, fy + Math.cos(hoek + w)*lengte);
+      ctx.closePath(); ctx.fill();
     }
-    const lens = ctx.createRadialGradient(fx, fy, 0, fx, fy, 26);      /* lens van de moving head */
+    const lens = ctx.createRadialGradient(fx, fy, 0, fx, fy, 26);
     lens.addColorStop(0, `rgba(255,255,255,${.95*sterkte})`);
-    lens.addColorStop(.3, `rgba(${r},${g},${b},${.7*sterkte})`);
-    lens.addColorStop(1, `rgba(${r},${g},${b},0)`);
+    lens.addColorStop(.3, `rgba(${r},${g},${b},${.7*sterkte})`); lens.addColorStop(1, `rgba(${r},${g},${b},0)`);
     ctx.fillStyle = lens; ctx.beginPath(); ctx.arc(fx, fy, 26, 0, 7); ctx.fill();
   }
 
-  function gobo(gx, gy, t, sterkte) {                                   /* draaiende 'breakup'-gobo op de vloer */
+  /* Draaiende 'breakup'-gobo op de vloer */
+  function vloerGobo(gx, gy, t, sterkte) {
+    if (sterkte <= 0) return;
     ctx.save(); ctx.translate(gx, gy); ctx.scale(1, .42); ctx.rotate(t * 1.6);
     const R = Math.min(W, H) * .26;
     for (let ring = 0; ring < 3; ring++) {
       const n = 5 + ring * 3, rr = R * (.22 + ring * .3), dot = R * (.17 - ring * .03);
       for (let i = 0; i < n; i++) {
-        const a = i / n * Math.PI * 2 + ring * .3;
-        const x = Math.cos(a) * rr, y = Math.sin(a) * rr;
+        const a = i / n * Math.PI * 2 + ring * .3, x = Math.cos(a) * rr, y = Math.sin(a) * rr;
         const g = ctx.createRadialGradient(x, y, 0, x, y, dot);
-        g.addColorStop(0, `rgba(255,236,200,${.6*sterkte})`); g.addColorStop(.55, `rgba(255,236,200,${.35*sterkte})`); g.addColorStop(1, 'rgba(255,236,200,0)');
+        g.addColorStop(0, `rgba(255,236,200,${.6*sterkte})`); g.addColorStop(.55, `rgba(255,236,200,${.35*sterkte})`);
+        g.addColorStop(1, 'rgba(255,236,200,0)');
         ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, dot, 0, 7); ctx.fill();
       }
     }
     ctx.restore();
   }
 
+  /* Laserwaaier vanaf de vloer: dunne scherpe lijnen met een smalle gloed */
+  function laser(t) {
+    const p = (t - T.laser[0]) / (T.laser[1] - T.laser[0]);
+    if (p <= 0 || p >= 1) return;
+    const open = Math.min(ease(p / .25), ease((1 - p) / .2));          /* waaier opent en sluit */
+    const lx = W / 2, ly = H + 4, L = Math.hypot(W, H) * 1.1;
+    const n = 15, span = 1.15 * open, kantel = Math.sin(t * 5.2) * .22 * open;
+    ctx.lineCap = 'round';
+    for (let i = 0; i < n; i++) {
+      const a = Math.PI + kantel + (i / (n - 1) - .5) * span * 2;      /* omhoog = PI */
+      const ex = lx + Math.sin(a) * L, ey = ly + Math.cos(a) * L;
+      const [r,g,b] = i % 5 === 2 ? [255,40,60] : [40,255,110];
+      const knip = (Math.sin(t * 38 + i * 1.7) > -.6) ? 1 : .25;        /* scanner-flikkering */
+      const gr = ctx.createLinearGradient(lx, ly, ex, ey);
+      gr.addColorStop(0, `rgba(${r},${g},${b},${.9*open*knip})`); gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      ctx.strokeStyle = gr;
+      ctx.lineWidth = 7; ctx.globalAlpha = .18; ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(ex, ey); ctx.stroke();
+      ctx.lineWidth = 1.4; ctx.globalAlpha = 1;  ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(ex, ey); ctx.stroke();
+    }
+    const bron = ctx.createRadialGradient(lx, ly, 0, lx, ly, 40);
+    bron.addColorStop(0, `rgba(200,255,220,${.9*open})`); bron.addColorStop(1, 'rgba(40,255,110,0)');
+    ctx.fillStyle = bron; ctx.beginPath(); ctx.arc(lx, ly, 40, 0, 7); ctx.fill();
+  }
+
+  /* Logo-gobo: licht valt door de letters, zoals een echte metalen gobo */
+  function maakLogoGobo(R) {
+    const c = document.createElement('canvas'), S = Math.ceil(R * 2.4 * dpr);
+    c.width = c.height = S; const g = c.getContext('2d'); g.scale(dpr, dpr);
+    const m = S / dpr / 2;
+    const vlek = g.createRadialGradient(m, m, 0, m, m, R);               /* zwak strooilicht in de cirkel */
+    vlek.addColorStop(0, 'rgba(255,240,225,.16)'); vlek.addColorStop(.92, 'rgba(255,240,225,.10)');
+    vlek.addColorStop(1, 'rgba(255,240,225,0)');
+    g.fillStyle = vlek; g.beginPath(); g.arc(m, m, R, 0, 7); g.fill();
+    g.strokeStyle = 'rgba(255,245,235,.85)'; g.lineWidth = Math.max(2, R * .018);
+    g.beginPath(); g.arc(m, m, R * .94, 0, 7); g.stroke();
+    g.fillStyle = '#fff6ee'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    const f = 'Archivo, "Inter", system-ui, sans-serif';
+    g.font = `900 ${R * .42}px ${f}`; g.fillText('NEVEN', m, m - R * .14, R * 1.6);
+    g.font = `800 ${R * .17}px ${f}`; g.fillText('PRODUCTIONS', m, m + R * .26, R * 1.45);
+    g.font = `500 ${R * .075}px ui-monospace, Menlo, monospace`;
+    g.fillText('LICHT · GELUID · ROOK', m, m + R * .52, R * 1.2);
+    return c;
+  }
+  function wandGobo(wx, wy, t) {
+    const zicht = fase(T.wand, t); if (zicht <= 0) return;
+    const R = Math.min(W * .42, H * .3);
+    if (!logoGobo) logoGobo = maakLogoGobo(R);
+    const scherp = fase(T.focus, t), onscherp = (1 - scherp) * R * .12;  /* focus-pull */
+    const D = logoGobo.width / dpr;
+    const kopie = scherp > .98 ? 1 : 10;
+    ctx.globalAlpha = zicht / Math.sqrt(kopie) * (kopie > 1 ? .55 : 1);
+    for (let i = 0; i < kopie; i++) {
+      const a = i / kopie * Math.PI * 2, ox = kopie > 1 ? Math.cos(a) * onscherp : 0, oy = kopie > 1 ? Math.sin(a) * onscherp : 0;
+      ctx.drawImage(logoGobo, wx - D/2 + ox, wy - D/2 + oy, D, D);
+    }
+    ctx.globalAlpha = 1;
+  }
+
   function frame(nu) {
     if (klaar) return;
     if (t0 === null) t0 = nu;
     const t = (nu - t0) / 1000;
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'source-over'; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
     ctx.globalCompositeOperation = 'lighter';
 
-    const aan = ease(t / .35);                                          /* koppen gaan aan */
-    const samen = ease((t - .5) / 1.1);                                 /* bundels zwaaien naar de gobo */
-    const gx = W / 2, gy = H * .8, L = Math.hypot(W, H) * 1.15;
+    const aan = ease(t / .35), samen = fase(T.samen, t), naarWand = fase(T.wand, t);
+    const gx = W / 2, gy = H * .8, wx = W / 2, wy = H * .42, L = Math.hypot(W, H) * 1.15;
 
-    /* rook in de lucht, licht drijvend */
-    ctx.globalAlpha = .55 * aan;
-    const dx = (t * 18) % 512;
-    for (let x = -1024; x < W + 1024; x += 1024) for (let y = 0; y < H; y += 1024) ctx.drawImage(rook, x + dx * 2, y, 1024, 1024);
+    ctx.globalAlpha = .55 * aan; const dx = (t * 36) % 1024;
+    for (let x = -1024; x < W + 1024; x += 1024) for (let y = 0; y < H; y += 1024) ctx.drawImage(rook, x + dx, y, 1024, 1024);
     ctx.globalAlpha = 1;
 
     for (let i = 0; i < 4; i++) {
       const fx = W * (.14 + i * .24), fy = -8;
-      const doel = Math.atan2(gx - fx, gy - fy);
+      const doelVloer = Math.atan2(gx - fx, gy - fy), doelWand = Math.atan2(wx - fx, wy - fy);
+      const doel = doelVloer + (doelWand - doelVloer) * naarWand;
       const zwaai = UIT[i] * (1 - samen) * Math.cos(t * 2.4 + i);
-      const breedte = .035 + .025 * (1 - samen);
-      bundel(fx, fy, doel + zwaai, breedte, GEL[i], aan * (t > T_LOGO ? .7 : 1), L);
+      const breedte = .035 + .025 * (1 - samen) + .03 * naarWand;         /* zoom open naar de wand */
+      bundel(fx, fy, doel + zwaai, breedte, GEL[i], aan * (1 - .55 * naarWand), L);
     }
-    gobo(gx, gy, t, ease((t - 1.0) / .6));
+    vloerGobo(gx, gy, t, fase(T.vloer, t) * (1 - naarWand));
+    laser(t);
+    wandGobo(wx, wy, t);
 
-    if (t > T_FLITS) {                                                  /* strobe-flits als overgang */
+    if (t > T.flits) {
       ctx.globalCompositeOperation = 'source-over';
-      ctx.fillStyle = `rgba(255,255,255,${Math.max(0, 1 - (t - T_FLITS) / .35) * .85})`;
-      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = `rgba(255,255,255,${Math.max(0, 1 - (t - T.flits) / .35) * .85})`; ctx.fillRect(0, 0, W, H);
     }
-    if (t > T_LOGO && !el.classList.contains('logo-aan')) el.classList.add('logo-aan');
-    if (t > T_EIND) return stop();
+    if (t > T.eind) return stop();
     requestAnimationFrame(frame);
   }
 
@@ -415,7 +467,7 @@ html.intro-loopt body{overflow:hidden}
   }
   el.addEventListener('click', stop);
   addEventListener('keydown', e => { if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') stop(); }, { once:true });
-  setTimeout(stop, 6000);                                               /* vangnet als rAF stilvalt */
+  setTimeout(stop, 6500);
   requestAnimationFrame(frame);
 })();
 </script>
