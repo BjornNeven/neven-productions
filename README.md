@@ -10,7 +10,7 @@ WhatsApp-groepen.
 |---|---|
 | `index.html` | de hele site: opmaak, inhoud en script |
 | `favicon.svg` | tabbladicoon in de vier gelkleuren |
-| `og.png` | deelafbeelding van 1200×630 voor WhatsApp/Instagram-voorbeelden (bevat "Vanaf € 45" en "30 tot 250 personen": opnieuw maken als dat verandert) |
+| `og.png` | deelafbeelding van 1200×630 voor WhatsApp/Instagram-voorbeelden (bevat "Vanaf € 45", "tot 250 personen" en "DJ op aanvraag": opnieuw maken als dat verandert) |
 | `img/` | eigen foto's (JPG, max. 1600 px) en de hero-loop `hero.mp4`/`hero.webm` (8 s, zonder geluid, ca. 0,4 MB) |
 
 ## Wat nog ingevuld moet worden
@@ -34,6 +34,8 @@ Alles tussen vierkante haken: zoek in `index.html` op `[`.
 | tot 150 pers. | geluidsset tot 150 pers., 2 m truss met 2 LED-pars en 2× moving head 150 W, LED football moving head, rookmachine 900 W | € 200 |
 | tot 250 pers. (binnen) | geluidsset tot 250 pers., 2 m truss met 4× moving head 150 W, LED football moving head, T-bar met 4× LED-par 200 W, rookmachine 900 W | € 300 |
 
+Alle prijzen zijn exclusief DJ; met DJ komt er € 300 bij (opgegeven 10 oktober 2026).
+
 **Nog nalopen (aanname, niet van Beau):** de korte pitch per pakket, de label "per feest", de stappen
 "Van aanvraag tot afbouw" en de antwoorden bij de veelgestelde vragen (stroom, opbouwtijd, buiten).
 
@@ -50,6 +52,13 @@ Hij stopt bij klik, Esc, Enter of spatie, met een vangnet na 6,5 s. Met `?intro=
 sla je hem over tijdens het bouwen.
 
 Timing aanpassen: het object `T` bovenin het intro-script.
+
+## Editmodus
+
+Zet `?edit` achter de URL (bijv. `index.html?edit`). Klik een element aan en typ een opmerking.
+Opmerkingen blijven in de browser bewaard (localStorage `np-edit`) en zijn uit te lezen via
+`window.__opmerkingen` of met "Kopieer" in de balk. De intro speelt niet in deze modus.
+Zonder `?edit` laadt `edit.js` niet en merkt een bezoeker er niets van.
 
 ## Hoe het formulier werkt
 

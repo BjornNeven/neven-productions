@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Neven Productions — licht, geluid en DJ voor jouw avond</title>
-<meta name="description" content="Licht, geluid en rook voor je feest. Vier pakketten voor 30 tot 250 personen, vanaf € 45." />
+<title>Neven Productions — licht, geluid en rook, DJ op aanvraag</title>
+<meta name="description" content="Licht, geluid en rook voor je feest. Vier pakketten tot 250 personen, vanaf € 45. DJ op aanvraag." />
 <meta name="theme-color" content="#06070a" />
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Neven Productions" />
 <meta property="og:title" content="Neven Productions — licht, geluid en DJ" />
-<meta property="og:description" content="Vier pakketten voor feesten van 30 tot 250 personen, vanaf € 45." />
+<meta property="og:description" content="Vier pakketten voor feesten tot 250 personen, vanaf € 45. DJ op aanvraag." />
 <meta property="og:url" content="https://[jouwdomein.nl]/" />
 <meta property="og:image" content="og.png" />
 <meta property="og:image:width" content="1200" />
@@ -251,6 +251,13 @@ footer .rijen{display:flex; flex-wrap:wrap; gap:.75rem 2rem; justify-content:spa
 @media (min-width:900px){ .cases.vier{grid-template-columns:repeat(2,1fr); align-items:stretch} }
 @media (min-width:1180px){ .cases.vier{grid-template-columns:repeat(4,1fr)} }
 
+/* DJ-optie onder de pakketten */
+.dj-optie{margin-top:1.5rem; display:grid; gap:.25rem 1.5rem; align-items:center; background:var(--haze);
+  border:var(--rand); border-left:4px solid rgb(var(--gel-015)); padding:1rem 1.25rem}
+.dj-optie .oog{margin:0; color:rgb(var(--gel-015))}
+.dj-optie p:last-child{margin:0; max-width:none}
+@media (min-width:760px){ .dj-optie{grid-template-columns:auto 1fr} }
+
 /* Kies je kleur */
 .sfeer{display:grid; gap:1.25rem; margin-top:2rem}
 @media (min-width:860px){ .sfeer{grid-template-columns:minmax(0,2fr) minmax(0,1fr); align-items:center} }
@@ -299,7 +306,7 @@ html.intro-loopt body{overflow:hidden}
   let gezien = false;
   try { gezien = sessionStorage.getItem('np-intro') === '1'; } catch (e) {}
   const rustig = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (gezien || rustig || /[?&]intro=uit/.test(location.search)) { el.remove(); return; }
+  if (gezien || rustig || /[?&](intro=uit|edit)/.test(location.search)) { el.remove(); return; }
   try { sessionStorage.setItem('np-intro', '1'); } catch (e) {}
   document.documentElement.classList.add('intro-loopt');
 
@@ -505,7 +512,7 @@ html.intro-loopt body{overflow:hidden}
 
 <dl class="cijfers">
   <div><dt>Pakketten</dt><dd>4</dd></div>
-  <div><dt>Gasten</dt><dd>30–250</dd></div>
+  <div><dt>Personen</dt><dd>0–250</dd></div>
   <div><dt>Vanaf</dt><dd>€ 45</dd></div>
   <div><dt>Reactie op aanvraag</dt><dd>&lt;24u</dd></div>
 </dl>
@@ -529,7 +536,7 @@ html.intro-loopt body{overflow:hidden}
         <li>1× JBL PartyBox 310</li>
         <li>2× LED-par op T-bar</li>
       </ul>
-      <p class="prijs"><b>€ 45</b><span>per feest</span></p>
+      <p class="prijs"><b>€ 45</b><span>excl. DJ</span></p>
       <a class="knop" href="#boeken" data-pakket="Tot 30">Dit pakket aanvragen</a>
     </article>
     <article class="case" style="--gel:var(--gel-126)">
@@ -544,7 +551,7 @@ html.intro-loopt body{overflow:hidden}
         <li>4× LED-par op T-bar</li>
         <li>1× rookmachine 900 W</li>
       </ul>
-      <p class="prijs"><b>€ 85</b><span>per feest</span></p>
+      <p class="prijs"><b>€ 85</b><span>excl. DJ</span></p>
       <a class="knop" href="#boeken" data-pakket="Tot 50">Dit pakket aanvragen</a>
     </article>
     <article class="case aanbevolen" style="--gel:var(--gel-015)">
@@ -560,7 +567,7 @@ html.intro-loopt body{overflow:hidden}
         <li>1× LED football moving head</li>
         <li>1× rookmachine 900 W</li>
       </ul>
-      <p class="prijs"><b>€ 200</b><span>per feest</span></p>
+      <p class="prijs"><b>€ 200</b><span>excl. DJ</span></p>
       <a class="knop vol" href="#boeken" data-pakket="Tot 150">Dit pakket aanvragen</a>
     </article>
     <article class="case" style="--gel:var(--gel-106)">
@@ -577,9 +584,13 @@ html.intro-loopt body{overflow:hidden}
         <li>T-bar met 4× LED-par 200 W</li>
         <li>1× rookmachine 900 W</li>
       </ul>
-      <p class="prijs"><b>€ 300</b><span>per feest</span></p>
+      <p class="prijs"><b>€ 300</b><span>excl. DJ</span></p>
       <a class="knop" href="#boeken" data-pakket="Tot 250">Dit pakket aanvragen</a>
     </article>
+  </div>
+  <div class="dj-optie">
+    <p class="oog">Optie</p>
+    <p><b>DJ erbij?</b> Alle prijzen zijn exclusief DJ. Wil je er een DJ bij die de hele avond draait, dan komt er <b>€ 300</b> bij.</p>
   </div>
   <p class="klein">Prijzen per feest. Reisafstand of iets extra's bespreken we vooraf.</p>
 </section>
@@ -689,6 +700,13 @@ html.intro-loopt body{overflow:hidden}
         <option selected>Weet ik nog niet</option>
       </select>
     </div>
+    <div class="veld"><label for="fDj">DJ erbij (+ € 300)</label>
+      <select id="fDj">
+        <option>Nee, zonder DJ</option>
+        <option>Ja, met DJ</option>
+        <option>Weet ik nog niet</option>
+      </select>
+    </div>
     <div class="veld"><label for="fMeer">Toelichting</label>
       <textarea id="fMeer" placeholder="Wat voor avond wordt het? Is er al een installatie? Hoe laat kan ik erin?"></textarea></div>
 
@@ -740,7 +758,8 @@ function bericht() {
     `Datum: ${datum}`,
     `Locatie: ${v('fPlek') || '-'}`,
     `Aantal gasten: ${v('fGasten') || '-'}`,
-    `Pakket: ${$('fPakket').value}`, '',
+    `Pakket: ${$('fPakket').value}`,
+    `DJ: ${$('fDj').value}`, '',
     v('fMeer') || 'Geen toelichting.',
   ].join('\n');
 }
@@ -791,6 +810,9 @@ document.querySelectorAll('.kleuren button').forEach(knop => {
 });
 
 bijwerken();
+
+/* Editmodus voor het bijwerken van de site: alleen met ?edit in de URL */
+if (/[?&]edit/.test(location.search)) { const e = document.createElement('script'); e.src = 'edit.js'; document.body.appendChild(e); }
 </script>
 </body>
 </html>
