@@ -252,24 +252,22 @@ footer .rijen{display:flex; flex-wrap:wrap; gap:.75rem 2rem; justify-content:spa
 @media (min-width:1180px){ .cases.vier{grid-template-columns:repeat(4,1fr)} }
 
 /* DJ-optie onder de pakketten */
-.dj-optie{margin-top:1.5rem; display:grid; gap:.25rem 1.5rem; align-items:center; background:var(--haze);
-  border:var(--rand); border-left:4px solid rgb(var(--gel-015)); padding:1rem 1.25rem}
-.dj-optie .oog{margin:0; color:rgb(var(--gel-015))}
-.dj-optie p:last-child{margin:0; max-width:none}
-@media (min-width:760px){ .dj-optie{grid-template-columns:auto 1fr} }
-
-/* Kies je kleur */
-.sfeer{display:grid; gap:1.25rem; margin-top:2rem}
-@media (min-width:860px){ .sfeer{grid-template-columns:minmax(0,2fr) minmax(0,1fr); align-items:center} }
-.sfeer .doek{position:relative; aspect-ratio:4/3; overflow:hidden; border:var(--rand); background:var(--fog)}
-.sfeer .doek img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  opacity:0; transition:opacity .45s ease}
-.sfeer .doek img.aan{opacity:1}
-.kleuren{display:flex; flex-wrap:wrap; gap:.6rem}
-.kleuren button{--c:var(--gel-119); flex:1 1 calc(50% - .6rem); min-height:52px; cursor:pointer;
-  background:var(--haze); color:var(--chalk); border:1px solid var(--line); border-left:6px solid rgb(var(--c));
-  font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; text-align:left; padding:.7rem 1rem}
-.kleuren button[aria-pressed="true"]{background:rgb(var(--c) / .18); border-color:rgb(var(--c))}
+.dj-optie{--gel:var(--gel-015); margin-top:2rem; display:grid; background:var(--haze); border:var(--rand);
+  border-top:4px solid rgb(var(--gel)); background:linear-gradient(110deg, rgb(var(--gel) / .10), var(--haze) 55%)}
+.dj-optie figure{margin:0; overflow:hidden; aspect-ratio:16/9; background:var(--fog)}
+.dj-optie figure img{width:100%; height:100%; object-fit:cover}
+.dj-tekst{padding:1.5rem 1.4rem}
+.dj-tekst .oog{color:rgb(var(--gel)); margin-bottom:.5rem}
+.dj-tekst h3{font-size:clamp(2rem,6vw,3rem); font-stretch:122%; margin-bottom:.6rem}
+.dj-tekst p{color:var(--lead)}
+.dj-prijs{display:flex; align-items:baseline; gap:.75rem; margin:1.25rem 0}
+.dj-prijs b{font-size:clamp(2.4rem,7vw,3.4rem); font-weight:800; font-stretch:118%; line-height:1; color:rgb(var(--gel))}
+.dj-prijs span{font-family:var(--mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--dim)}
+@media (min-width:760px){
+  .dj-optie{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr); align-items:center}
+  .dj-optie figure{aspect-ratio:auto; height:100%; min-height:320px}
+  .dj-tekst{padding:2rem 2.25rem}
+}
 
 /* Beeldstrook */
 .beelden{display:grid; gap:.6rem; margin-top:2rem; grid-template-columns:repeat(2,1fr)}
@@ -589,33 +587,18 @@ html.intro-loopt body{overflow:hidden}
     </article>
   </div>
   <div class="dj-optie">
-    <p class="oog">Optie</p>
-    <p><b>DJ erbij?</b> Alle prijzen zijn exclusief DJ. Wil je er een DJ bij die de hele avond draait, dan komt er <b>€ 300</b> bij.</p>
+    <figure><img src="img/beeld-dj.jpg" alt="DJ-controller in het booth, groen verlicht" loading="lazy" width="900" height="1200" /></figure>
+    <div class="dj-tekst">
+      <p class="oog">Optie bij elk pakket</p>
+      <h3>DJ erbij</h3>
+      <p>Alle pakketprijzen zijn <b>exclusief DJ</b>. Wil je dat er de hele avond gedraaid wordt, boek dan een DJ bij je pakket.</p>
+      <p class="dj-prijs"><b>+ € 300</b><span>per feest</span></p>
+      <a class="knop vol" href="#boeken" data-dj="ja">Pakket met DJ aanvragen</a>
+    </div>
   </div>
   <p class="klein">Prijzen per feest. Reisafstand of iets extra's bespreken we vooraf.</p>
 </section>
 
-<section class="wrap" id="sfeer">
-  <div class="sectiekop">
-    <p class="oog">Kies je kleur</p>
-    <h2>Zelfde zaal, andere avond</h2>
-    <div class="kolom"><p>Vier foto's, één opstelling. Alleen de kleur van het licht verschilt. Jij kiest de sfeer, ik zet hem klaar.</p></div>
-  </div>
-  <div class="sfeer">
-    <div class="doek">
-      <img class="aan" src="img/sfeer-paars.jpg" alt="Opstelling in paars licht met rook" data-kleur="paars" loading="lazy" />
-      <img src="img/sfeer-blauw.jpg" alt="Opstelling in blauw licht" data-kleur="blauw" loading="lazy" />
-      <img src="img/sfeer-rood.jpg" alt="Opstelling in rood licht met rook" data-kleur="rood" loading="lazy" />
-      <img src="img/sfeer-groen.jpg" alt="Opstelling in groen licht met rook" data-kleur="groen" loading="lazy" />
-    </div>
-    <div class="kleuren" role="group" aria-label="Kies een lichtkleur">
-      <button type="button" style="--c:var(--gel-126)" data-kleur="paars" aria-pressed="true">Paars</button>
-      <button type="button" style="--c:var(--gel-119)" data-kleur="blauw" aria-pressed="false">Blauw</button>
-      <button type="button" style="--c:var(--gel-106)" data-kleur="rood" aria-pressed="false">Rood</button>
-      <button type="button" style="--c:46 190 110" data-kleur="groen" aria-pressed="false">Groen</button>
-    </div>
-  </div>
-</section>
 
 <section class="wrap">
   <div class="sectiekop">
@@ -783,6 +766,8 @@ function ontbreekt() {
   return false;
 }
 
+document.querySelectorAll('[data-dj]').forEach(a => a.addEventListener('click', () => { $('fDj').value = 'Ja, met DJ'; bijwerken(); }));
+
 $('aanvraag').addEventListener('input', bijwerken);
 $('aanvraag').addEventListener('change', bijwerken);
 $('aanvraag').addEventListener('submit', e => e.preventDefault());
@@ -798,15 +783,6 @@ $('kopieer').addEventListener('click', () => {
     $('statusregel').textContent = 'Tekst is geselecteerd. Kopieer hem met je toestel.';
   };
   try { navigator.clipboard.writeText(bericht()).then(klaar, terugval); } catch (e) { terugval(); }
-});
-
-/* Kies je kleur: foto wisselen */
-document.querySelectorAll('.kleuren button').forEach(knop => {
-  knop.addEventListener('click', () => {
-    const k = knop.dataset.kleur;
-    document.querySelectorAll('.kleuren button').forEach(b => b.setAttribute('aria-pressed', b === knop));
-    document.querySelectorAll('.sfeer .doek img').forEach(i => i.classList.toggle('aan', i.dataset.kleur === k));
-  });
 });
 
 bijwerken();
