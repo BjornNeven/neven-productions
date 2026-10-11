@@ -20,7 +20,6 @@ Alles tussen vierkante haken: zoek in `index.html` op `[`.
 | Waar | Wat |
 |---|---|
 | `TELEFOON` bovenin het script | WhatsApp-nummer, landcode zonder + en zonder 0, bijv. `31612345678` |
-| `MAIL` bovenin het script | e-mailadres |
 | `[regio]` | hero en de kleine tekst bij de prijzen |
 | footer | naam, KvK-nummer, mail, Instagram |
 
