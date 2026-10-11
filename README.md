@@ -21,7 +21,6 @@ Alles tussen vierkante haken: zoek in `index.html` op `[`.
 |---|---|
 | `TELEFOON` bovenin het script | WhatsApp-nummer, landcode zonder + en zonder 0, bijv. `31612345678` |
 | `MAIL` bovenin het script | e-mailadres |
-| `og:url` en `og:image` | volledige URL zodra er een domein is |
 | `[regio]` | hero en de kleine tekst bij de prijzen |
 | footer | naam, KvK-nummer, mail, Instagram |
 
@@ -68,9 +67,13 @@ in-app browser van Instagram. De bezoeker drukt zelf op verzenden.
 
 ## Online zetten
 
-Cloudflare Pages → Workers & Pages → Pages → Connect to Git → deze repo kiezen.
-Geen build command, output directory `/`. Daarna is elke push een deploy. Eigen domein koppelen kan
-later; SSL gaat automatisch.
+De site draait op **GitHub Pages** vanaf de branch `main` (map `/`), op **https://neven-productions.com**.
+Elke push naar `main` staat binnen een paar minuten online.
+
+- Het domein en de e-mail staan bij Hostinger. Het bestand `CNAME` in de repo vertelt GitHub welk domein erbij hoort.
+- DNS bij Hostinger: vier A-records voor `@` naar GitHub Pages (185.199.108.153, .109.153, .110.153, .111.153)
+  en `www` als CNAME naar `bjornneven.github.io`. De MX-, SPF-, DKIM- en DMARC-records voor de mail blijven ongewijzigd.
+- HTTPS regelt GitHub zelf (Let's Encrypt).
 
 ## Herkomst
 
