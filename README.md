@@ -13,15 +13,10 @@ WhatsApp-groepen.
 | `og.png` | deelafbeelding van 1200×630 voor WhatsApp/Instagram-voorbeelden (bevat "Vanaf € 45", "tot 250 personen" en "DJ als optie" en "Licht · Geluid · DJ": opnieuw maken als dat verandert) |
 | `img/` | eigen foto's (JPG, max. 1600 px) en de hero-loop `hero.mp4`/`hero.webm` (8 s, zonder geluid, ca. 0,4 MB) |
 
-## Wat nog ingevuld moet worden
+## Contactgegevens
 
-Alles tussen vierkante haken: zoek in `index.html` op `[`.
-
-| Waar | Wat |
-|---|---|
-| `TELEFOON` bovenin het script | WhatsApp-nummer, landcode zonder + en zonder 0, bijv. `31612345678` |
-| `[regio]` | hero en de kleine tekst bij de prijzen |
-| footer | naam, KvK-nummer, mail, Instagram |
+WhatsApp 06 27 29 71 46 (`TELEFOON` bovenin het script), mail beau@neven-productions.com (`MAIL`),
+regio Etten-Leur. Hobbyproject, dus geen KvK-nummer. Instagram kan later in de footer.
 
 ## Pakketten (bron: gedeelde notitie van Beau, 10 oktober 2026)
 
